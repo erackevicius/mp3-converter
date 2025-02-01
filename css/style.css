@@ -709,9 +709,20 @@ a.btn:hover {
   /* Centruojama žodyno forma */
   .card {
     margin: 0 auto;  /* Užtikrina, kad forma būtų centre */
-    width: 90%;       /* Užtikrina, kad kortelė neužimtų per daug vietos */
-    max-width: 450px; /* Ribojamas maksimalus plotis */
+    width: 90%;       /* Užtikrina vienodą atstumą nuo kraštų */
+    max-width: 400px; /* Ribojamas maksimalus plotis */
     text-align: center;
+    padding: 20px;    /* Užtikrina, kad forma nebūtų prilipusi prie kraštų */
+    box-sizing: border-box; /* Neleidžia keisti pločio dėl padding */
+  }
+
+  /* Užtikrina, kad žodynas būtų išlygiuotas centre */
+  #dictionary-list {
+    width: 100%;
+    padding: 10px;
+    max-width: 380px; /* Ribojama, kad neitų per plačiai */
+    margin: 0 auto; /* Centruoja sąrašą */
+    border-radius: 10px;
   }
 
   /* Naikina taškus šalia žodžių */
@@ -721,7 +732,7 @@ a.btn:hover {
     margin: 0;
   }
 
-  /* Žodžių kortelės - išlyginimas */
+  /* Žodžių kortelės - išlyginimas ir dydžio korekcijos */
   .dictionary-word {
     display: flex;
     justify-content: center;
