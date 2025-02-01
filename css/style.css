@@ -703,3 +703,64 @@ a.btn:hover {
     font-size: 14px;
   }
 }
+/* Pataisymai mažiems ekranams */
+@media (max-width: 600px) {
+  
+  /* Centruojama žodyno forma */
+  .card {
+    margin: 0 auto;  /* Užtikrina, kad forma būtų centre */
+    width: 90%;       /* Užtikrina, kad kortelė neužimtų per daug vietos */
+    max-width: 450px; /* Ribojamas maksimalus plotis */
+    text-align: center;
+  }
+
+  /* Naikina taškus šalia žodžių */
+  ul {
+    list-style-type: none; /* Pašalina sąrašo taškus */
+    padding: 0; 
+    margin: 0;
+  }
+
+  /* Žodžių kortelės - išlyginimas */
+  .dictionary-word {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 15px;
+    background: white;
+    border-radius: 10px;
+    margin: 5px 0;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  /* Užtikrina, kad klausymo mygtukai būtų arčiau vienas kito */
+  #listening-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px; /* Sumažintas tarpas tarp klausymo mygtukų */
+    padding: 5px;
+  }
+
+  /* Klausymo nuorodų bendras stilius */
+  .listen-link {
+    padding: 8px 14px; /* Sumažinti mygtukai */
+    font-size: 14px; /* Sumažintas šriftas */
+    border-radius: 6px; /* Apvalesni mygtukai */
+  }
+
+  /* Mygtukai „Žodynas“ ir „Atsijungti“ - didesnis tarpas nuo formos */
+  .top-buttons {
+    margin-bottom: 20px; /* Suteikia daugiau vietos tarp mygtukų ir formos */
+  }
+
+  /* Išvalymo mygtukas - geriau išdėstytas */
+  .large-btn {
+    font-size: 18px;
+    padding: 12px 24px;
+    margin: 10px auto; /* Centruoja mygtuką */
+    border-radius: 25px;
+  }
+}
