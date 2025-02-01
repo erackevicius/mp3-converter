@@ -720,7 +720,7 @@ a.btn:hover {
   #dictionary-list {
     width: 100%;
     padding: 10px;
-    max-width: 380px; /* Ribojama, kad neitų per plačiai */
+    max-width: 350px; /* Ribojama, kad neitų per plačiai */
     margin: 0 auto; /* Centruoja sąrašą */
     border-radius: 10px;
   }
