@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagrindinis - Teksto į MP3 generatorius</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Žodyno ir Atsijungimo mygtukai -->
+  <div class="top-buttons">
+    <a href="dictionary/dictionary.html" class="btn dictionary-btn">📖 Žodynas</a>
+    <button class="btn logout-btn" id="logout-btn">🚪 Atsijungti</button>
+  </div>
+
+  <div id="overlay"></div>
+  <div id="loading-spinner">
+    <div class="spinner"></div>
+    <p>Kraunama...</p>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2 class="description">Įrašykite norimus žodžius ir klausykite juos į audio formate.</h2>
+
+      <form id="text-form">
+        <div class="form-group">
+          <label for="english-input">Anglų kalbos žodžiai:</label>
+          <textarea id="english-input" placeholder="Įrašykite tekstą anglų kalba..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="lithuanian-input">Lietuvių kalbos žodžiai:</label>
+          <textarea id="lithuanian-input" placeholder="Įrašykite tekstą lietuvių kalba..." required></textarea>
+        </div>
+
+        <!-- Išvalymo mygtukas -->
+        <button type="button" id="clear-btn" class="btn secondary">🗑️ Išvalyti</button>
+      </form>
+
+      <div id="listening-section">
+       
+        <ul id="listening-links">
+          <li><a href="#" id="listen-lithuanian" class="listen-link">🎧 Lietuviški žodžiai</a></li>          
+          <li><a href="#" id="listen-both" class="listen-link">🎧 Lietuviški ir angliški žodžiai</a></li>
+          <li><a href="#" id="listen-english" class="listen-link">🎧 Angliški žodžiai</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="message-box">
+    <p>Gero klausymo!</p>
+    <button id="message-close-btn" class="btn primary">Ačiū!</button>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/logout.js"></script> <!-- Atsijungimo funkcionalumas -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const selectedWords = localStorage.getItem("selectedWords");
+
+        if (selectedWords) {
+            const wordsArray = JSON.parse(selectedWords);
+            document.getElementById("english-input").value = wordsArray.map(word => word.english).join("\n");
+            document.getElementById("lithuanian-input").value = wordsArray.map(word => word.lithuanian).join("\n");
+
+            localStorage.removeItem("selectedWords"); // Išvalome po naudojimo
+        }
+
+        // Funkcija išvalyti laukus
+        document.getElementById("clear-btn").addEventListener("click", () => {
+            document.getElementById("english-input").value = "";
+            document.getElementById("lithuanian-input").value = "";
+            console.log("🗑️ Laukai išvalyti");
+        });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,669 @@
+/* Bendri nustatymai */
+body {
+  margin: 0;
+  font-family: "Lexend", serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  width: 100%;
+}
+
+.card {
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  text-align: center;
+  width: 90%;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.description {
+  font-size: 14px;
+  color: #555;
+  margin: 10px 0 20px;
+  line-height: 1.5;
+}
+
+.cta {
+  font-size: 13px;
+  color: #888;
+  margin: 10px 0 35px;
+}
+
+.cta a {
+  color: #2575fc;
+  text-decoration: none;
+}
+
+.cta a:hover {
+  text-decoration: underline;
+}
+
+/* Formos elementai */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+label {
+  font-size: 14px;
+  color: #555;
+}
+
+textarea {
+  width: 98%;
+  padding: 10px 0 0 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  min-height: 80px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+textarea:focus {
+  border-color: #2575fc;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  background: #2575fc;
+  color: white;
+  box-shadow: 0 4px 10px rgba(37, 117, 252, 0.5);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+button[type="submit"]:hover {
+  background: #1d5fd6;
+  box-shadow: 0 6px 14px rgba(37, 117, 252, 0.8);
+}
+
+/* Klausymo sekcija */
+#listening-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#listening-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  list-style-type: none;
+  padding: 0;
+}
+
+#listening-links a {
+  color: #2575fc;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#listening-links a:hover {
+  text-decoration: underline;
+}
+
+/* Kraunamo simbolio ir uždangos dizainas */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  opacity: 0;
+  z-index: 10;
+  transition: opacity 0.3s ease-in-out;
+}
+
+#overlay.show {
+  display: block;
+  opacity: 1;
+}
+
+#loading-spinner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: none;
+  opacity: 0;
+  text-align: center;
+  z-index: 20;
+  transition: opacity 0.3s ease-in-out;
+}
+
+#loading-spinner.show {
+  display: block;
+  opacity: 1;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid rgba(255, 255, 255, 0.3);
+  border-top: 6px solid #fff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pranešimų langelis */
+#message-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  z-index: 30;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+#message-box.show {
+  display: block;
+  opacity: 1;
+}
+
+/* Mygtukai */
+.btn {
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn.primary {
+  background: #2575fc;
+  color: white;
+  box-shadow: 0 4px 10px rgba(37, 117, 252, 0.5);
+}
+
+.btn.primary:hover {
+  background: #1d5fd6;
+  box-shadow: 0 6px 14px rgba(37, 117, 252, 0.8);
+}
+/* Formos elementai */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 15px;
+}
+
+.form-group {
+  text-align: left;
+}
+
+label {
+  font-size: 14px;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: #2575fc;
+}
+
+button[type="submit"] {
+  width: 100%;
+}
+
+/* Mažiems ekranams (mobiliesiems) */
+@media (max-width: 480px) {
+  form {
+    gap: 10px;
+  }
+}
+/* Lentelės stiliai */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #2575fc;
+  color: white;
+}
+
+td {
+  background-color: #f9f9f9;
+}
+
+td.clickable {
+  cursor: pointer;
+  color: #2575fc;
+  font-weight: bold;
+}
+
+td.clickable:hover {
+  text-decoration: underline;
+}
+
+/* Mygtuko stilius */
+a.btn {  
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 30px;
+  background: #2575fc;
+  color: white;
+  box-shadow: 0 4px 10px rgba(37, 117, 252, 0.5);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+a.btn:hover {
+  background: #1d5fd6;
+  box-shadow: 0 6px 14px rgba(37, 117, 252, 0.8);
+}
+/* Mygtukai viršuje */
+.top-buttons {
+  display: flex;
+  justify-content: center;  /* Abu mygtukai centre */
+  align-items: center;      /* Užtikrina, kad jie bus tame pačiame aukštyje */
+  gap: 40px;                /* Vienodas tarpas tarp mygtukų */
+  width: 100%;
+  position: fixed;          /* Vietoje absolute – dabar fiksuoti viršuje */
+  top: 30px;                /* Užtikrina, kad nenuslys per žemai */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  height: 60px;             /* Užtikrina, kad konteineris pakankamai aukštas */
+  background: rgba(255, 255, 255, 0.1); /* Pusiau permatomas fonas */
+  padding: 10px;
+  border-radius: 10px;
+}
+
+/* Žodyno mygtukas */
+.btn.dictionary-btn {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn.dictionary-btn:hover {
+  background: linear-gradient(to right, #5a0fb1, #1f63d3);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* Atsijungimo mygtukas */
+.btn.logout-btn {
+  background: linear-gradient(to right, #fc466b, #ff5f6d);
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn.logout-btn:hover {
+  background: linear-gradient(to right, #d63045, #e74c3c);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+/* Užtikriname, kad mygtukai išliks vietoje ant mažų ekranų */
+@media (max-height: 600px) {
+  .top-buttons {
+    position: fixed; /* Užtikrina, kad neužlips ant generatoriaus */
+    top: 5px;        /* Koreguoja vietą mažame ekrane */
+  }
+}
+
+/* Užtikrina, kad generavimo kortelė neatsidurtų per arti mygtukų */
+.container {
+  margin-top: 80px; /* Prideda papildomą tarpą viršuje */
+}
+/* Žodyno sąrašo elementai */
+.dictionary-word {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dictionary-word:hover {
+  background-color: #f1f1f1;
+}
+
+.dictionary-word.selected {
+  background-color: #d1e7dd;
+  border-color: #0f5132;
+  color: #0f5132;
+}
+
+/* Spinnerio ir overlay stiliai jau buvo pridėti anksčiau */
+
+/* Žodyno žodžių stilius */
+.dictionary-word {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dictionary-word:hover {
+  background-color: #f1f1f1;
+}
+
+.dictionary-word.selected {
+  background-color: #d1e7dd; /* Šviesiai žalia spalva pasirinktam žodžiui */
+  border-color: #0f5132;
+  color: #0f5132;
+}
+/* Užtikrina, kad žodynas matomas */
+#dictionary-list {
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 10px;
+  width: 90%;
+  margin: 10px auto;
+}
+
+/* Pasirinktas žodis */
+.dictionary-word.selected {
+  background-color: #d1e7dd;
+  border-color: #0f5132;
+  color: #0f5132;
+}
+
+/* Didelis mygtukas "Generuoti MP3" */
+.large-btn {
+  font-size: 20px;
+  padding: 15px 30px;
+  background: linear-gradient(to right, #ff7b00, #ff4500);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  display: block;
+  margin: 20px auto;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.large-btn:hover {
+  background: linear-gradient(to right, #ff4500, #ff2200);
+  box-shadow: 0 6px 18px rgba(255, 69, 0, 0.5);
+}
+/* Konteinerio stilius */
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Vienodas tarpas tarp elementų */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Antraštė */
+.container h1 {
+  font-size: 2.5em;
+  color: #333;
+  margin: 0;
+}
+
+/* Paaiškinimas */
+.container .subtitle {
+  font-size: 1.2em;
+  color: #fff;
+  margin: 0;
+}
+
+/* Žodynas */
+#dictionary-list {
+  display: block;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 10px;
+  width: 100%; /* Praplėstas iki viso konteinerio pločio */
+  margin-top: 20px;
+}
+
+/* Žodžio elementas */
+.dictionary-word {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  margin: 5px 0;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dictionary-word:hover {
+  background-color: #f1f1f1;
+}
+
+.dictionary-word.selected {
+  background-color: #d1e7dd;
+  border-color: #0f5132;
+  color: #0f5132;
+}
+
+/* Didelis mygtukas "Generuoti MP3" */
+.large-btn {
+  font-size: 22px;
+  padding: 15px 30px;
+  background: linear-gradient(to right, #ff7b00, #ff4500);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  display: block;
+  margin: 5px auto 5px; /* Viršuje daugiau tarpo */
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.large-btn:hover {
+  background: linear-gradient(to right, #ff4500, #ff2200);
+  box-shadow: 0 6px 18px rgba(255, 69, 0, 0.5);
+}
+/* Pranešimo stilius */
+.success-message {
+  text-align: center;
+  padding: 50px 20px;
+  background: #f0f8ff;
+  border: 1px solid #cce7ff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.success-message h1 {
+  font-size: 1.8em;
+  color: #007bff;
+  margin-bottom: 20px;
+}
+
+.success-message .btn {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.success-message .btn:hover {
+  background: #0056b3;
+}
+/* 📌 Išvalyti mygtuko dizainas */
+#clear-btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #8fa0ff;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+#clear-btn:hover {
+  background-color: #cc0000;
+}
+
+#clear-btn:active {
+  transform: scale(0.98);
+}
+
+/* 📌 Klausymo sekcija */
+#listening-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#listening-links {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  list-style-type: none;
+  padding: 7px;
+}
+
+/* 📌 Klausymo nuorodų bendras stilius */
+.listen-link {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none !important; /* Priverstinai pašalina pabraukimą */
+  background: rgba(255, 255, 255, 0.1);
+  color: #555;
+  border: 2px solid transparent;
+  transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+}
+
+.listen-link:hover,
+.listen-link:focus,
+.listen-link:active {
+  text-decoration: none !important; /* Pašalina pabraukimą visose būsenose */
+}
+
+
+/* 📌 Aktyvus klausymo režimas (žalios ausinės) */
+.listen-link.active {
+  color: #28a745;
+  border-color: #28a745;
+  font-weight: bold;
+}
+
+/* 📌 Neaktyvus klausymo režimas (pilkos ausinės) */
+.listen-link.inactive {
+  color: #555;
+  border-color: #ccc;
+}
+
+/* 📌 Paskutinė aktyvi nuoroda */
+.listen-link.last-active {
+  background: rgba(40, 167, 69, 0.1);
+}
+/* Klausymo antraštė */
+#listening-section h3 {
+  margin-top: 50px;
+  margin-bottom: 10px; /* Sumažina atstumą po antraštės */
+  font-size: 18px;
+  color: #444;
+}
+
+/* Klausymo mygtukų sąrašas */
+#listening-links {
+  margin-top: -5px; /* Pakelia nuorodas arčiau antraštės */
+}

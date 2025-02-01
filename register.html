@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registracija</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1 class="title">Registracija</h1>
+      <p class="description">Norėdami užsiregistruoti, užpildykite žemiau esančią formą:</p>
+      <form id="register-form"> <!-- Formos ID -->
+        <div class="form-group">
+          <label for="name">Vardas:</label>
+          <input type="text" id="name" name="name" placeholder="Įrašykite savo vardą" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Slaptažodis:</label>
+          <input type="password" id="password" name="password" placeholder="Įrašykite slaptažodį" required>
+        </div>
+        <div class="form-group">
+          <label for="repeat-password">Pakartoti slaptažodį:</label>
+          <input type="password" id="repeat-password" name="repeat-password" placeholder="Pakartokite slaptažodį" required>
+        </div>
+        <button type="submit" class="btn primary">Registruotis</button>
+      </form>
+      <p class="cta">
+        Jau turite paskyrą? <a href="login.html">Prisijungti</a>
+      </p>
+    </div>
+  </div>
+  <script src="js/auth.js"></script> <!-- Registracijos ir prisijungimo logika -->
+</body>
+</html>

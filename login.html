@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prisijungti - Teksto į MP3 generatorius</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1 class="title">Prisijungti</h1>
+      <p class="description">Įveskite savo prisijungimo duomenis, kad galėtumėte tęsti.</p>
+      <form id="login-form"> <!-- Formos ID -->
+        <div class="form-group">
+          <label for="username">Vartotojo vardas:</label>
+          <input type="text" id="username" name="username" placeholder="Įveskite vartotojo vardą" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Slaptažodis:</label>
+          <input type="password" id="password" name="password" placeholder="Įveskite slaptažodį" required>
+        </div>
+        <button type="submit" class="btn primary">Prisijungti</button>
+      </form>
+      <p class="cta">Neturite paskyros? <a href="register.html">Registruotis</a></p>
+    </div>
+  </div>
+  <script src="js/auth.js"></script> <!-- Registracijos ir prisijungimo logika -->
+</body>
+</html>
