@@ -38,7 +38,7 @@ body {
 }
 
 .description {
-  font-size: 14px;
+  font-size: 18px;
   color: #555;
   margin: 10px 0 20px;
   line-height: 1.5;
@@ -76,6 +76,7 @@ label {
 }
 
 textarea {
+  margin-top: 10px;
   width: 98%;
   padding: 10px 0 0 10px;
   font-size: 14px;
@@ -110,28 +111,62 @@ button[type="submit"]:hover {
 }
 
 /* Klausymo sekcija */
+/* 📌 Klausymo sekcija */
 #listening-section {
-  margin-top: 20px;
+  margin-top: 5px;
   text-align: center;
 }
 
 #listening-links {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 50px;
   list-style-type: none;
-  padding: 0;
+  padding: 7px;
 }
 
-#listening-links a {
-  color: #2575fc;
-  text-decoration: none;
+/* 📌 Klausymo mygtukai – stiklo efektas */
+.listen-link {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  text-decoration: none !important; /* Priverstinai pašalina pabraukimą */
+  background: rgba(106, 17, 203, 0.2); /* Švelnus violetinis fonas */
+  color: #555;
+  border: 2px solid rgba(106, 17, 203, 0.4); /* Violetinis stiklo efektas */
+  backdrop-filter: blur(8px); /* Stiklo efektas */
+  transition: all 0.3s ease;
+}
+
+/* 📌 Hover efektas (aktyvuojasi užvedus pelę) */
+.listen-link:hover {
+  background: rgba(106, 17, 203, 0.4);
+  border: 2px solid rgba(106, 17, 203, 0.6);
+  color: #333;
+}
+
+/* 📌 Aktyvus klausymo režimas – žalsvas stiklinis efektas */
+.listen-link.active {
+  background: rgba(40, 167, 69, 0.2); /* Švelniai žalia spalva */
+  border: 2px solid rgba(40, 167, 69, 0.4); /* Žalias stiklo efektas */
+  color: #28a745;
   font-weight: bold;
 }
 
-#listening-links a:hover {
-  text-decoration: underline;
+/* 📌 Neaktyvus klausymo režimas – švelnus violetinis */
+.listen-link.inactive {
+  background: rgba(106, 17, 203, 0.2);
+  border: 2px solid rgba(106, 17, 203, 0.4);
+  color: #555;
 }
+
+/* 📌 Paskutinė aktyvi nuoroda */
+.listen-link.last-active {
+  background: rgba(40, 167, 69, 0.3); /* Šiek tiek ryškesnė žalia */
+}
+
 
 /* Kraunamo simbolio ir uždangos dizainas */
 #overlay {
@@ -591,7 +626,7 @@ a.btn:hover {
   margin-top: 15px;
   border: none;
   border-radius: 8px;
-  background-color: #8fa0ff;
+  background-color: #4c67ff;
   color: white;
   font-size: 16px;
   font-weight: bold;
