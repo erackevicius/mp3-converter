@@ -1,4 +1,3 @@
-/* Bendri nustatymai */
 body {
   margin: 0;
   font-family: "Lexend", serif;
@@ -7,18 +6,21 @@ body {
   font-style: normal;
   background: linear-gradient(to right, #6a11cb, #2575fc);
   color: #333;
+  min-height: 100vh; /* 📌 Pakeista, kad turinys nebūtų nukerpamas */
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  padding-top: 40px; /* 📌 Papildomas tarpas viršuje, jei nėra viršutinės juostos */
 }
 
+/* 📌 Konteineris */
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   width: 100%;
+  margin-top: 40px; /* 📌 Užtikrina, kad turinys neprispaustų prie viršaus */
 }
 
 .card {
@@ -845,4 +847,21 @@ a.btn:hover {
 .content-btn:hover {
   background: linear-gradient(to right, #5a0fb1, #1f63d3);
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+}
+/* 📌 5. Mažiems ekranams (telefonams) */
+@media (max-width: 600px) {
+  body {
+    padding-top: 100px; /* 📌 Padidina tarpą, kad turinys nebūtų nukirptas */
+  }
+
+  .top-buttons {
+    width: 95%;
+    max-width: 380px;
+    height: 80px; /* 📌 Didesnis aukštis, kad būtų lengviau paspausti */
+    gap: 15px;
+  }
+
+  .container {
+    margin-top: 100px; /* 📌 Pakoreguotas tarpas */
+  }
 }
