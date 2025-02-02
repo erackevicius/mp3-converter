@@ -9,16 +9,27 @@ document.addEventListener("DOMContentLoaded", () => {
     // 🔹 Funkcija gauti duomenis iš JSON arba `localStorage`
     async function loadDictionary() {
         try {
-            let words;
-            const storedWords = localStorage.getItem("shuffledWorkWords");
+            const lastUpdate = localStorage.getItem("lastUpdate");
+            const now = new Date().getTime();
+            const oneDay = 24 * 60 * 60 * 1000;
 
-            if (storedWords) {
-                words = JSON.parse(storedWords); // Naudoja anksčiau sumaišytus žodžius
+            let words;
+
+            if (!lastUpdate || now - lastUpdate > oneDay) {
+                console.log("🔄 JSON atnaujinamas...");
+                const response = await fetch("./work.json");
+                words = await response.json();
+                words = shuffleArray(words);
+
+                localStorage.setItem("shuffledWorkWords", JSON.stringify(words));
+                localStorage.setItem("lastUpdate", now);
+                localStorage.removeItem("selectedWords"); // ⚠️ Išvalo senus pasirinkimus
+
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
             } else {
-                const response = await fetch("./work.json"); // Nuskaito JSON failą
-                words = await response.json(); // Paverčia į JS objektą
-                words = shuffleArray(words); // Sumaišo žodžius tik vieną kartą
-                localStorage.setItem("shuffledWorkWords", JSON.stringify(words)); // Išsaugo į localStorage
+                words = JSON.parse(localStorage.getItem("shuffledWorkWords"));
             }
 
             renderDictionary(words);
@@ -39,9 +50,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 🔹 Funkcija sumaišyti masyvą (Fisher-Yates algoritmas)
+    // 🔹 Funkcija sumaišyti masyvą
     function shuffleArray(array) {
-        let shuffledArray = [...array]; // Sukuriame naują masyvą, kad neištrintų originalaus JSON
+        let shuffledArray = [...array];
         for (let i = shuffledArray.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
@@ -49,12 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return shuffledArray;
     }
 
-    // 🔹 Funkcija pažymėti/panaikinti pažymėjimą žodžiams
+    // 🔹 Pažymėti/panaikinti pažymėjimą žodžiams
     function toggleSelection(item) {
         item.classList.toggle("selected");
     }
 
-    // 🔹 Klausymo sąrašo generavimas su išblukimo efektu iki "Ačiū!" paspaudimo
+    // 🔹 Generuoja klausymo sąrašą
     generateBtn.addEventListener("click", () => {
         const selectedWords = [...document.querySelectorAll(".dictionary-word.selected")]
             .map((item) => item.textContent);
@@ -64,15 +75,12 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Rodo loading efektą (nepašalinamas iš karto)
         overlay.classList.add("show");
         loadingSpinner.classList.add("show");
 
         setTimeout(() => {
-            // Tik rodo pranešimą "Gero klausymo!"
             messageBox.classList.add("show");
 
-            // Išsaugo pasirinktus žodžius į `localStorage`
             localStorage.setItem(
                 "selectedWords",
                 JSON.stringify(selectedWords.map(word => {
@@ -83,12 +91,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1500);
     });
 
-    // 🔹 Paspaudus "Ačiū!" pašalina overlay ir nukreipia į pagrindinį puslapį
+    // 🔹 Paspaudus "Ačiū!" grįžta į pagrindinį puslapį
     messageCloseBtn.addEventListener("click", () => {
         messageBox.classList.remove("show");
         overlay.classList.remove("show");
         loadingSpinner.classList.remove("show");
-        window.location.href = "../main.html"; // Nukreipia į pagrindinį puslapį
+        window.location.href = "../main.html";
     });
 
     // 🔹 Įkelti žodyną kai puslapis užkrautas

@@ -9,21 +9,34 @@ document.addEventListener("DOMContentLoaded", () => {
     // 🔹 Funkcija gauti duomenis iš JSON arba `localStorage`
     async function loadDictionary() {
         try {
-            let words;
-            const storedWords = localStorage.getItem("shuffledHolydayWords");
+            const lastUpdate = localStorage.getItem("lastUpdateHolyday");
+            const now = new Date().getTime();
+            const oneDay = 24 * 60 * 60 * 1000; // 1 diena milisekundėmis
 
-            if (storedWords) {
-                words = JSON.parse(storedWords); // Naudoja anksčiau sumaišytus žodžius
+            let words;
+
+            // Jei `localStorage` per senas arba tuščias, įkelia naujus duomenis
+            if (!lastUpdate || now - lastUpdate > oneDay) {
+                console.log("🔄 JSON atnaujinamas...");
+                const response = await fetch("./holyday.json");
+                words = await response.json();
+                words = shuffleArray(words);
+
+                // Išsaugo sumaišytus žodžius ir atnaujina laiką
+                localStorage.setItem("shuffledHolydayWords", JSON.stringify(words));
+                localStorage.setItem("lastUpdateHolyday", now);
+                localStorage.removeItem("selectedWords"); // ⚠️ Išvalo pasirinktus žodžius, jei JSON pasikeitė
+
+                setTimeout(() => {
+                    location.reload(); // Perkrauna puslapį, kad parodytų naujus duomenis
+                }, 1000);
             } else {
-                const response = await fetch("./holyday.json"); // Nuskaito JSON failą
-                words = await response.json(); // Paverčia į JS objektą
-                words = shuffleArray(words); // Sumaišo žodžius tik vieną kartą
-                localStorage.setItem("shuffledHolydayWords", JSON.stringify(words)); // Išsaugo į localStorage
+                words = JSON.parse(localStorage.getItem("shuffledHolydayWords"));
             }
 
             renderDictionary(words);
         } catch (error) {
-            console.error("Nepavyko įkelti žodyno duomenų:", error);
+            console.error("❌ Nepavyko įkelti žodyno duomenų:", error);
         }
     }
 
@@ -60,7 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .map((item) => item.textContent);
 
         if (selectedWords.length === 0) {
-            alert("Pasirinkite bent vieną žodį!");
+            alert("⚠️ Pasirinkite bent vieną žodį!");
             return;
         }
 
