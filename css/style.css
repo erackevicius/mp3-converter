@@ -851,7 +851,7 @@ a.btn:hover {
 /* 📌 5. Mažiems ekranams (telefonams) */
 @media (max-width: 600px) {
   body {
-    padding-top: 100px; /* 📌 Padidina tarpą, kad turinys nebūtų nukirptas */
+    padding-top: 0px; /* 📌 Padidina tarpą, kad turinys nebūtų nukirptas */
   }
 
   .top-buttons {
@@ -862,6 +862,6 @@ a.btn:hover {
   }
 
   .container {
-    margin-top: 100px; /* 📌 Pakoreguotas tarpas */
+    margin-top: 20px; /* 📌 Pakoreguotas tarpas */
   }
 }
