@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
         item.classList.toggle("selected");
     }
 
-    // 🔹 Klausymo sąrašo generavimas su spinneriu ir overlay efektu
+    // 🔹 Klausymo sąrašo generavimas su išblukimo efektu iki "Ačiū!" paspaudimo
     generateBtn.addEventListener("click", () => {
         const selectedWords = [...document.querySelectorAll(".dictionary-word.selected")]
             .map((item) => item.textContent);
@@ -64,15 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Rodo loading efektą
+        // Rodo loading efektą (nepašalinamas iš karto)
         overlay.classList.add("show");
         loadingSpinner.classList.add("show");
 
         setTimeout(() => {
-            overlay.classList.remove("show");
-            loadingSpinner.classList.remove("show");
+            // Tik rodo pranešimą "Gero klausymo!"
+            messageBox.classList.add("show");
 
-            // 🔹 Pataisyta localStorage saugojimo struktūra
+            // Išsaugo pasirinktus žodžius į `localStorage`
             localStorage.setItem(
                 "selectedWords",
                 JSON.stringify(selectedWords.map(word => {
@@ -80,14 +80,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     return { english, lithuanian };
                 }))
             );
-
-            messageBox.classList.add("show");
         }, 1500);
     });
 
-    // 🔹 Paspaudus "Ačiū!" nukreipiama į pagrindinį puslapį
+    // 🔹 Paspaudus "Ačiū!" pašalina overlay ir nukreipia į pagrindinį puslapį
     messageCloseBtn.addEventListener("click", () => {
         messageBox.classList.remove("show");
+        overlay.classList.remove("show");
+        loadingSpinner.classList.remove("show");
         window.location.href = "../main.html"; // Nukreipia į pagrindinį puslapį
     });
 
