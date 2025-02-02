@@ -721,8 +721,9 @@ a.btn:hover {
 
   /* Mygtukai „Žodynas“ ir „Atsijungti“ - didesnis tarpas nuo formos */
   .top-buttons {
-    top: 15px; /* Pakeista iš 30px į 15px, kad būtų pakankamas atstumas */
-    gap: 20px; /* Sumažintas tarpas tarp šių mygtukų */
+    top: 0px; /* Pakeista iš 30px į 15px, kad būtų pakankamas atstumas */
+    gap: 15px; /* Sumažintas tarpas tarp šių mygtukų */
+    max-width: 326px;
   }
 
   /* Klausymo nuorodų bendras stilius */
