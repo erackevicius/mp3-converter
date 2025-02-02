@@ -22,7 +22,7 @@ body {
 }
 
 .card {
-  background: #fff;
+  background: #ffffff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
   padding: 30px;
@@ -225,6 +225,7 @@ button[type="submit"]:hover {
   background: #2575fc;
   color: white;
   box-shadow: 0 4px 10px rgba(37, 117, 252, 0.5);
+  max-width: 266px;
 }
 
 .btn.primary:hover {
@@ -455,16 +456,19 @@ a.btn:hover {
 
 /* Didelis mygtukas "Generuoti MP3" */
 .large-btn {
-  font-size: 20px;
-  padding: 15px 30px;
-  background: linear-gradient(to right, #ff7b00, #ff4500);
-  color: white;
-  border: none;
-  border-radius: 30px;
   display: block;
-  margin: 20px auto;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 226px;  /* Užtikrina vienodą mygtuko plotį */
+  text-align: center;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
 }
 
 .large-btn:hover {
@@ -708,6 +712,7 @@ a.btn:hover {
   
   /* Centruojama žodyno forma */
   .card {
+    background-color: #ffffff;
     margin: 0 auto;  /* Užtikrina, kad forma būtų centre */
     width: 90%;       /* Užtikrina vienodą atstumą nuo kraštų */
     max-width: 400px; /* Ribojamas maksimalus plotis */
@@ -774,4 +779,33 @@ a.btn:hover {
     margin: 10px auto; /* Centruoja mygtuką */
     border-radius: 25px;
   }
+}
+.content-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.content-btn {
+  display: block;
+  width: 80%;
+  max-width: 300px;
+  text-align: center;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+}
+
+.content-btn:hover {
+  background: linear-gradient(to right, #5a0fb1, #1f63d3);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
 }
