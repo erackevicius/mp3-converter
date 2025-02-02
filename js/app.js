@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // ✅ Užpildo laukus tik jei jie tušti
     function loadStoredWords() {
         const selectedWords = localStorage.getItem("selectedWords");
-
         if (selectedWords) {
             const wordsArray = JSON.parse(selectedWords);
             const englishInput = document.getElementById("english-input");
@@ -26,16 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function playTTS(text, lang, button) {
-        if (!text) {
-            console.warn("⚠️ Tuščias tekstas, nebus grojama.");
-            return false;
-        }
-
-        if (stopRequested) {
-            console.log("⏸️ Atkūrimas sustabdytas.");
-            resetButtonStyles();
-            return false;
-        }
+        if (!text || stopRequested) return false;
 
         isSpeaking = true;
         stopRequested = false;
@@ -61,6 +51,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     let audio = new Audio(`data:audio/mp3;base64,${data.audioContent}`);
                     currentAudio = audio;
 
+                    audio.play().then(() => {
+                        console.log("▶️ Pradėtas atkūrimas:", text);
+                    }).catch((error) => {
+                        console.error("❌ Garso atkūrimo klaida:", error);
+                        resolve(false);
+                    });
+
                     audio.onended = () => {
                         console.log("✅ Baigtas klausymas:", text);
                         resolve(true);
@@ -70,11 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         console.error("❌ Klaida grojant:", text);
                         resolve(false);
                     };
-
-                    audio.play().catch((error) => {
-                        console.error("❌ Garso atkūrimo klaida:", error);
-                        resolve(false);
-                    });
                 });
             } else {
                 console.error("⚠️ API atsakė be garso:", data);
@@ -89,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function stopPlayback() {
-        console.log("⏸️ Sustabdome atkūrimą.");
         stopRequested = true;
         if (currentAudio) currentAudio.pause();
         isSpeaking = false;
@@ -103,22 +94,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function resetButtonStyles() {
-        if (activeLink) {
-            activeLink.classList.remove("active");
-        }
+        if (activeLink) activeLink.classList.remove("active");
     }
 
     document.getElementById("clear-btn").addEventListener("click", () => {
         document.getElementById("english-input").value = "";
         document.getElementById("lithuanian-input").value = "";
-        console.log("🗑️ Laukai išvalyti");
-
         localStorage.removeItem("selectedWords");
+        console.log("🗑️ Laukai išvalyti");
     });
 
     async function handleClick(event, inputField, lang, button) {
         event.preventDefault();
-        console.log(`🎵 Paspausta: ${button.textContent.trim()}`);
 
         if (isSpeaking) {
             stopPlayback();
@@ -138,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (stopRequested) break;
             let played = await playTTS(word, lang, button);
             if (!played) break;
-            await new Promise(resolve => setTimeout(resolve, 3000)); // ✅ Pridėta 3s pauzė
+            await new Promise(resolve => setTimeout(resolve, 3000));
         }
 
         isSpeaking = false;
@@ -163,7 +150,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (listenBoth) {
         listenBoth.addEventListener("click", async (event) => {
             event.preventDefault();
-            console.log("🎵 Paspausta: Lietuviški ir Angliški žodžiai");
 
             if (isSpeaking) {
                 stopPlayback();
@@ -191,11 +177,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 let played1 = await playTTS(lithuanianWords[i], "lt-LT", listenBoth);
                 if (!played1) break;
-                await new Promise(resolve => setTimeout(resolve, 3000)); // ✅ 3s pauzė
+                await new Promise(resolve => setTimeout(resolve, 3000));
 
                 let played2 = await playTTS(englishWords[i], "en-US", listenBoth);
                 if (!played2) break;
-                await new Promise(resolve => setTimeout(resolve, 3000)); // ✅ 3s pauzė
+                await new Promise(resolve => setTimeout(resolve, 3000));
             }
 
             isSpeaking = false;
@@ -203,6 +189,5 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ✅ Pakrauna išsaugotus žodžius, jei yra
     loadStoredWords();
 });
