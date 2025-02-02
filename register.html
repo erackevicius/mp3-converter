@@ -17,6 +17,10 @@
           <input type="text" id="name" name="name" placeholder="Įrašykite savo vardą" required>
         </div>
         <div class="form-group">
+          <label for="email">El. paštas:</label>
+          <input type="email" id="email" name="email" placeholder="Įrašykite savo el. paštą" required>
+        </div>
+        <div class="form-group">
           <label for="password">Slaptažodis:</label>
           <input type="password" id="password" name="password" placeholder="Įrašykite slaptažodį" required>
         </div>
@@ -31,6 +35,8 @@
       </p>
     </div>
   </div>
-  <script src="js/auth.js"></script> <!-- Registracijos ir prisijungimo logika -->
+
+  <!-- 🔹 Turi būti "module", kad Firebase veiktų -->
+  <script type="module" src="js/auth.js"></script>
 </body>
 </html>
