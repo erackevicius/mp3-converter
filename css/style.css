@@ -713,10 +713,10 @@ a.btn:hover {
   #listening-links {
     display: flex;
     justify-content: center;
-    gap: 10px; /* Dar labiau sumažina tarpą tarp mygtukų */
+    gap: 0px; /* Dar labiau sumažina tarpą tarp mygtukų */
     flex-wrap: wrap; /* Užtikrina, kad mygtukai nesusigrūstų ir persirikiuotų */
     list-style-type: none;
-    padding: 5px;
+    padding: 0px;
   }
 
   /* Mygtukai „Žodynas“ ir „Atsijungti“ - didesnis tarpas nuo formos */
