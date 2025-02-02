@@ -13,8 +13,8 @@
       <p class="description">Įveskite savo prisijungimo duomenis, kad galėtumėte tęsti.</p>
       <form id="login-form"> <!-- Formos ID -->
         <div class="form-group">
-          <label for="username">Vartotojo vardas:</label>
-          <input type="text" id="username" name="username" placeholder="Įveskite vartotojo vardą" required>
+          <label for="email">El. paštas:</label> <!-- Pakeista iš "Vartotojo vardas" į "El. paštas" -->
+          <input type="email" id="email" name="email" placeholder="Įveskite el. paštą" required>
         </div>
         <div class="form-group">
           <label for="password">Slaptažodis:</label>
@@ -25,6 +25,8 @@
       <p class="cta">Neturite paskyros? <a href="register.html">Registruotis</a></p>
     </div>
   </div>
-  <script src="js/auth.js"></script> <!-- Registracijos ir prisijungimo logika -->
+
+  <!-- 🔹 Firebase autentifikacija -->
+  <script type="module" src="js/auth.js"></script> <!-- Svarbu pridėti type="module" -->
 </body>
 </html>

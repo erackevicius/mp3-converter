@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
-// 🔹 Firebase konfigūracija (PAKEISKITE SAVO DUOMENIMIS)
+// 🔹 Firebase konfigūracija
 const firebaseConfig = {
   apiKey: "AIzaSyCF2sgbRi8IzdhwOjB2VbOZdJjS4rXetjQ",
   authDomain: "mp-3-29d9e.firebaseapp.com",
@@ -26,7 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
         registerForm.addEventListener("submit", (e) => {
             e.preventDefault();
   
-            const name = document.getElementById("name").value.trim();
             const email = document.getElementById("email").value.trim();
             const password = document.getElementById("password").value;
             const repeatPassword = document.getElementById("repeat-password").value;
@@ -45,7 +44,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.querySelector(".container").innerHTML = `
                         <div class="success-message">
                             <h1>🎉 Sėkminga registracija!</h1>
-                            <p>Sveikiname prisijungus, ${name}!</p>
+                            <p>Sveikiname prisijungus, ${email}!</p>
                             <button id="success-btn" class="btn primary">Puiku!</button>
                         </div>
                     `;
