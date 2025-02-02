@@ -723,7 +723,8 @@ a.btn:hover {
   .top-buttons {
     top: 0px; /* Pakeista iš 30px į 15px, kad būtų pakankamas atstumas */
     gap: 15px; /* Sumažintas tarpas tarp šių mygtukų */
-    max-width: 326px;
+    max-width: 400px;
+    width: 90%;
   }
 
   /* Klausymo nuorodų bendras stilius */
