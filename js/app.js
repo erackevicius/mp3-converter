@@ -82,7 +82,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function stopPlayback() {
         stopRequested = true;
-        if (currentAudio) currentAudio.pause();
+        if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0; // ⚠️ Užtikrina, kad įrašas nesugroja iš naujo
+        }
         isSpeaking = false;
         resetButtonStyles();
     }
@@ -125,7 +128,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (stopRequested) break;
             let played = await playTTS(word, lang, button);
             if (!played) break;
-            await new Promise(resolve => setTimeout(resolve, 3000));
+            await new Promise(resolve => setTimeout(resolve, 3000)); // ⚠️ Sumažintas laukimo laikas
         }
 
         isSpeaking = false;
