@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentAudio = null;
     let activeLink = null;
 
-    // ✅ Užpildo laukus tik jei jie tušti
     function loadStoredWords() {
         const selectedWords = localStorage.getItem("selectedWords");
         if (selectedWords) {
@@ -58,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         resolve(false);
                     });
 
-                    audio.onended = () => {
+                    audio.onended = async () => {
                         console.log("✅ Baigtas klausymas:", text);
                         resolve(true);
                     };
@@ -67,6 +66,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         console.error("❌ Klaida grojant:", text);
                         resolve(false);
                     };
+
+                    // Užtikrina, kad laukia atkūrimo pabaigos
+                    audio.addEventListener("ended", () => resolve(true));
                 });
             } else {
                 console.error("⚠️ API atsakė be garso:", data);
@@ -84,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         stopRequested = true;
         if (currentAudio) {
             currentAudio.pause();
-            currentAudio.currentTime = 0; // ⚠️ Užtikrina, kad įrašas nesugroja iš naujo
+            currentAudio.currentTime = 0;
         }
         isSpeaking = false;
         resetButtonStyles();
@@ -128,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (stopRequested) break;
             let played = await playTTS(word, lang, button);
             if (!played) break;
-            await new Promise(resolve => setTimeout(resolve, 3000)); // ⚠️ Sumažintas laukimo laikas
+            await new Promise(resolve => setTimeout(resolve, 3000)); // ⚠️ Palikta 3 sek. pauzė tarp žodžių
         }
 
         isSpeaking = false;
