@@ -10,7 +10,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 40px; /* 📌 Papildomas tarpas viršuje, jei nėra viršutinės juostos */
+  padding-top: 20px; /* 📌 Papildomas tarpas viršuje, jei nėra viršutinės juostos */
 }
 
 /* 📌 Konteineris */
@@ -111,64 +111,6 @@ button[type="submit"]:hover {
   background: #1d5fd6;
   box-shadow: 0 6px 14px rgba(37, 117, 252, 0.8);
 }
-
-/* Klausymo sekcija */
-/* 📌 Klausymo sekcija */
-#listening-section {
-  margin-top: 5px;
-  text-align: center;
-}
-
-#listening-links {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  list-style-type: none;
-  padding: 7px;
-}
-
-/* 📌 Klausymo mygtukai – stiklo efektas */
-.listen-link {
-  display: inline-block;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  text-decoration: none !important; /* Priverstinai pašalina pabraukimą */
-  background: rgba(106, 17, 203, 0.2); /* Švelnus violetinis fonas */
-  color: #555;
-  border: 2px solid rgba(106, 17, 203, 0.4); /* Violetinis stiklo efektas */
-  backdrop-filter: blur(8px); /* Stiklo efektas */
-  transition: all 0.3s ease;
-}
-
-/* 📌 Hover efektas (aktyvuojasi užvedus pelę) */
-.listen-link:hover {
-  background: rgba(106, 17, 203, 0.4);
-  border: 2px solid rgba(106, 17, 203, 0.6);
-  color: #333;
-}
-
-/* 📌 Aktyvus klausymo režimas – žalsvas stiklinis efektas */
-.listen-link.active {
-  background: rgba(40, 167, 69, 0.2); /* Švelniai žalia spalva */
-  border: 2px solid rgba(40, 167, 69, 0.4); /* Žalias stiklo efektas */
-  color: #28a745;
-  font-weight: bold;
-}
-
-/* 📌 Neaktyvus klausymo režimas – švelnus violetinis */
-.listen-link.inactive {
-  background: rgba(106, 17, 203, 0.2);
-  border: 2px solid rgba(106, 17, 203, 0.4);
-  color: #555;
-}
-
-/* 📌 Paskutinė aktyvi nuoroda */
-.listen-link.last-active {
-  background: rgba(40, 167, 69, 0.3); /* Šiek tiek ryškesnė žalia */
-}
-
 
 /* Kraunamo simbolio ir uždangos dizainas */
 #overlay {
@@ -634,100 +576,6 @@ a.btn:hover {
   transform: scale(0.98);
 }
 
-/* 📌 Klausymo sekcija */
-#listening-section {
-  margin-top: 20px;
-  text-align: center;
-}
-
-#listening-links {
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  list-style-type: none;
-  padding: 7px;
-}
-
-/* 📌 Klausymo nuorodų bendras stilius */
-.listen-link {
-  display: inline-block;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 16px;
-  font-weight: bold;
-  text-decoration: none !important; /* Priverstinai pašalina pabraukimą */
-  background: rgba(255, 255, 255, 0.1);
-  color: #555;
-  border: 2px solid transparent;
-  transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
-}
-
-.listen-link:hover,
-.listen-link:focus,
-.listen-link:active {
-  text-decoration: none !important; /* Pašalina pabraukimą visose būsenose */
-}
-
-
-/* 📌 Aktyvus klausymo režimas (žalios ausinės) */
-.listen-link.active {
-  color: #28a745;
-  border-color: #28a745;
-  font-weight: bold;
-}
-
-/* 📌 Neaktyvus klausymo režimas (pilkos ausinės) */
-.listen-link.inactive {
-  color: #555;
-  border-color: #ccc;
-}
-
-/* 📌 Paskutinė aktyvi nuoroda */
-.listen-link.last-active {
-  background: rgba(40, 167, 69, 0.1);
-}
-/* Klausymo antraštė */
-#listening-section h3 {
-  margin-top: 50px;
-  margin-bottom: 10px; /* Sumažina atstumą po antraštės */
-  font-size: 18px;
-  color: #444;
-}
-
-/* Klausymo mygtukų sąrašas */
-#listening-links {
-  margin-top: -5px; /* Pakelia nuorodas arčiau antraštės */
-}
-/* Pataisymai tik mažiems ekranams */
-@media (max-width: 600px) {
-  
-  /* Klausymo mygtukai - mažesni tarpai ir glaudesnė išdėstymo tvarka */
-  #listening-links {
-    display: flex;
-    justify-content: center;
-    gap: 0px; /* Dar labiau sumažina tarpą tarp mygtukų */
-    flex-wrap: wrap; /* Užtikrina, kad mygtukai nesusigrūstų ir persirikiuotų */
-    list-style-type: none;
-    padding: 0px;
-  }
-
-  /* Klausymo nuorodų bendras stilius */
-  .listen-link {
-    padding: 8px 14px; /* Mažesni mygtukai, kad tilptų */
-    font-size: 14px; /* Sumažintas šriftas */
-    border-radius: 6px; /* Apvalesni mygtukai */
-  }
-
-  /* Aktyvus klausymo režimas */
-  .listen-link.active {
-    font-size: 15px; /* Aktyvus mygtukas šiek tiek didesnis */
-  }
-
-  /* Neaktyvus klausymo režimas */
-  .listen-link.inactive {
-    font-size: 14px;
-  }
-}
 /* Pataisymai mažiems ekranams */
 @media (max-width: 600px) {
   
@@ -771,23 +619,7 @@ a.btn:hover {
     font-weight: bold;
     text-align: center;
   }
-
-  /* Užtikrina, kad klausymo mygtukai būtų arčiau vienas kito */
-  #listening-links {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px; /* Sumažintas tarpas tarp klausymo mygtukų */
-    padding: 5px;
-  }
-
-  /* Klausymo nuorodų bendras stilius */
-  .listen-link {
-    padding: 8px 14px; /* Sumažinti mygtukai */
-    font-size: 14px; /* Sumažintas šriftas */
-    border-radius: 6px; /* Apvalesni mygtukai */
-  }
-
+ 
    /* Išvalymo mygtukas - geriau išdėstytas */
   .large-btn {
     font-size: 18px;
@@ -819,6 +651,9 @@ a.btn:hover {
   font-weight: bold;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: all 0.3s ease-in-out;
+}
+.main.h1 {
+  margin-bottom: 0;
 }
 
 .content-btn {
