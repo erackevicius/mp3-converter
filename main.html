@@ -3,52 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pagrindinis - Teksto į MP3 generatorius</title>
+  <title>Pagrindinis</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-  <!-- Žodyno ir Atsijungimo mygtukai -->
-  <div class="top-buttons">
-    <a href="dictionary/content.html" class="btn dictionary-btn">📖 Žodynas</a>
-    <button class="btn logout-btn" id="logout-btn">🚪 Atsijungti</button>
-  </div>
-
-  <div id="overlay"></div>
-  <div id="loading-spinner">
-    <div class="spinner"></div>
-    <p>Kraunama...</p>
-  </div>
-
   <div class="container">
-    <div class="card">
-      <h2 class="description">Įrašykite, arba įkelkite iš žodyno, norimus žodžius ir klausykite, apačioje pasirinkę klausymą.</h2>
-
-      <form id="text-form">
-        <div class="form-group">
-          <!-- <label for="english-input">Anglų kalbos žodžiai:</label> -->
-          <textarea id="english-input" placeholder="Įrašykite anglų k. žodžius stulpeliu" required></textarea>
-        </div>
-        <div class="form-group">
-          <!-- <label for="lithuanian-input">Lietuvių kalbos žodžiai:</label> -->
-          <textarea id="lithuanian-input" placeholder="Įrašykite lietuvių k. žodžius stulpeliu" required></textarea>
-        </div>
-
-        <!-- Išvalymo mygtukas -->
-        <button type="button" id="clear-btn" class="btn secondary">🗑️ Išvalyti</button>
-      </form>
-
-      <div id="listening-section">
+    <p class="subtitle">Įrašykite, arba įkelkite iš žodyno, norimus žodžius ir klausykite, apačioje pasirinkę klausymą.</p>
+    <h1> <a href="dictionary/content.html" class="main content-btn">📖 Žodyno pasirinkimas</h1></a>
       
-        <ul id="listening-links">
-          <li><a href="#" id="listen-lithuanian" class="listen-link">🎧 Lietuviški žodžiai</a></li>          
-          <li><a href="#" id="listen-both" class="listen-link">🎧 Lietuviški ir angliški žodžiai</a></li>
-          <li><a href="#" id="listen-english" class="listen-link">🎧 Angliški žodžiai</a></li>
-        </ul>
+    
+    <!-- <div class="top-buttons">
+       <button class="btn logout-btn" id="logout-btn">🚪 Atsijungti</button>
+    </div> -->
+
+    <div id="overlay"></div>
+    <div id="loading-spinner">
+      <div class="spinner"></div>
+      <p>Kraunama...</p>
+    </div>
+
+    <div class="container">
+      <div class="card">
+        
+        <form id="text-form">
+          <div class="form-group">
+            <!-- <label for="english-input">Anglų kalbos žodžiai:</label> -->
+            <textarea id="english-input" placeholder="Anglų k." required></textarea>
+          </div>
+          <div class="form-group">
+            <!-- <label for="lithuanian-input">Lietuvių kalbos žodžiai:</label> -->
+            <textarea id="lithuanian-input" placeholder="Lietuvių k." required></textarea>
+          </div>
+
+          <!-- Išvalymo mygtukas -->
+          <button type="button" id="clear-btn" class="btn secondary">🗑️ Išvalyti</button>
+        </form>
+        
+      </div>
+      <div class="content-links">
+        <a href="#" id= "listen-lithuanian" class="content-btn">🎧 Klausyti lietuviškai</a>
+        <a href="#" id= "listen-both" class="content-btn">🎧 Klausyti lietuviškai ir angliškai</a>
+        <a href="#" id= "listen-english" class="content-btn">🎧 Klausyti angliškai</a>
       </div>
     </div>
   </div>
-
   <div id="message-box">
     <p>Gero klausymo!</p>
     <button id="message-close-btn" class="btn primary">Ačiū!</button>

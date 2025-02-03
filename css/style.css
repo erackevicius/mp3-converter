@@ -418,18 +418,7 @@ a.btn:hover {
   background: linear-gradient(to right, #d63045, #e74c3c);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
 }
-/* Užtikriname, kad mygtukai išliks vietoje ant mažų ekranų */
-@media (max-height: 600px) {
-  .top-buttons {
-    position: fixed; /* Užtikrina, kad neužlips ant generatoriaus */
-    top: 5px;        /* Koreguoja vietą mažame ekrane */
-  }
-}
 
-/* Užtikrina, kad generavimo kortelė neatsidurtų per arti mygtukų */
-.container {
-  margin-top: 80px; /* Prideda papildomą tarpą viršuje */
-}
 /* Žodyno sąrašo elementai */
 .dictionary-word {
   padding: 10px 15px;
@@ -515,12 +504,13 @@ a.btn:hover {
 /* Konteinerio stilius */
 .container {
   max-width: 500px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 20px;
+  margin-top: 20px; /* Prideda papildomą tarpą viršuje */
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 20px; /* Vienodas tarpas tarp elementų */
+  gap: 10px; /* Vienodas tarpas tarp elementų */
   align-items: center;
   justify-content: center;
 }
@@ -529,7 +519,7 @@ a.btn:hover {
 .container h1 {
   font-size: 2.5em;
   color: #333;
-  margin: 0;
+  /* margin: 0; */
 }
 
 /* Paaiškinimas */
@@ -721,14 +711,6 @@ a.btn:hover {
     padding: 0px;
   }
 
-  /* Mygtukai „Žodynas“ ir „Atsijungti“ - didesnis tarpas nuo formos */
-  .top-buttons {
-    top: 0px; /* Pakeista iš 30px į 15px, kad būtų pakankamas atstumas */
-    gap: 15px; /* Sumažintas tarpas tarp šių mygtukų */
-    max-width: 400px;
-    width: 90%;
-  }
-
   /* Klausymo nuorodų bendras stilius */
   .listen-link {
     padding: 8px 14px; /* Mažesni mygtukai, kad tilptų */
@@ -806,12 +788,7 @@ a.btn:hover {
     border-radius: 6px; /* Apvalesni mygtukai */
   }
 
-  /* Mygtukai „Žodynas“ ir „Atsijungti“ - didesnis tarpas nuo formos */
-  .top-buttons {
-    margin-bottom: 20px; /* Suteikia daugiau vietos tarp mygtukų ir formos */
-  }
-
-  /* Išvalymo mygtukas - geriau išdėstytas */
+   /* Išvalymo mygtukas - geriau išdėstytas */
   .large-btn {
     font-size: 18px;
     padding: 12px 24px;
@@ -826,6 +803,22 @@ a.btn:hover {
   align-items: center;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+.main.content-btn {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 10px;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
 }
 
 .content-btn {
@@ -852,13 +845,6 @@ a.btn:hover {
 @media (max-width: 600px) {
   body {
     padding-top: 0px; /* 📌 Padidina tarpą, kad turinys nebūtų nukirptas */
-  }
-
-  .top-buttons {
-    width: 95%;
-    max-width: 380px;
-    height: 80px; /* 📌 Didesnis aukštis, kad būtų lengviau paspausti */
-    gap: 15px;
   }
 
   .container {
