@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // 🔹 Funkcija gauti duomenis iš JSON arba `localStorage`
     async function loadDictionary() {
         try {
-            const lastHash = localStorage.getItem("holydayJsonHash"); // Paskutinė JSON versija
-            const response = await fetch("./holyday.json");
+            const lastHash = localStorage.getItem("leisureJsonHash"); // Paskutinė JSON versija
+            const response = await fetch("./leisure.json");
             const jsonText = await response.text(); // Nuskaitome kaip tekstą
             const newHash = await getSHA256Hash(jsonText); // Apskaičiuojame naują hash
 
@@ -22,8 +22,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 words = shuffleArray(words);
 
                 // Išsaugo naujus duomenis į `localStorage`
-                localStorage.setItem("shuffledHolydayWords", JSON.stringify(words));
-                localStorage.setItem("holydayJsonHash", newHash);
+                localStorage.setItem("shuffledLeisureWords", JSON.stringify(words));
+                localStorage.setItem("leisureJsonHash", newHash);
                 localStorage.removeItem("selectedWords"); // ⚠️ Pašalina pasirinktus žodžius
 
                 setTimeout(() => {
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }, 1000);
             } else {
                 console.log("✅ JSON nepasikeitė – naudojami `localStorage` duomenys");
-                words = JSON.parse(localStorage.getItem("shuffledHolydayWords"));
+                words = JSON.parse(localStorage.getItem("shuffledLeisureWords"));
             }
 
             renderDictionary(words);
