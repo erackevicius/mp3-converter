@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let data = await response.json();
             if (data.audioContent) {
-                return await playAudio(`data:audio/mp3;base64,${data.audioContent}`, text);
+                return await playAudioWebAPI(`data:audio/mp3;base64,${data.audioContent}`, text);
             } else {
                 console.error("⚠️ API atsakė be garso:", data);
                 resetButtonStyles();
@@ -59,34 +59,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    async function playAudio(src, text) {
+    async function playAudioWebAPI(src, text) {
         return new Promise((resolve) => {
-            let audio = new Audio(src);
-            currentAudio = audio;
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
-            audio.onended = () => {
-                console.log("✅ Baigtas klausymas:", text);
-                resolve(true);
-            };
+            fetch(src)
+                .then(response => response.arrayBuffer())
+                .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
+                .then(audioBuffer => {
+                    const source = audioContext.createBufferSource();
+                    source.buffer = audioBuffer;
+                    source.connect(audioContext.destination);
+                    
+                    source.onended = () => {
+                        console.log("✅ Baigtas klausymas:", text);
+                        resolve(true);
+                    };
 
-            audio.onerror = () => {
-                console.error("❌ Klaida grojant:", text);
-                resolve(false);
-            };
-
-            // 🔹 iOS/Android problemų sprendimas: aktyvuojame garsą tik po vartotojo veiksmo
-            document.body.addEventListener("touchstart", () => {
-                if (audio.paused) {
-                    audio.play();
-                }
-            }, { once: true });
-
-            audio.play().then(() => {
-                console.log("▶️ Pradėtas atkūrimas:", text);
-            }).catch((error) => {
-                console.error("❌ Garso atkūrimo klaida:", error);
-                resolve(false);
-            });
+                    source.start(0);
+                })
+                .catch(error => {
+                    console.error("❌ Klaida grojant:", error);
+                    resolve(false);
+                });
         });
     }
 
