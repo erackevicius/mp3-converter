@@ -205,6 +205,7 @@ button[type="submit"]:hover {
   color: white;
   box-shadow: 0 4px 10px rgba(37, 117, 252, 0.5);
   max-width: 266px;
+  align-self: center;
 }
 
 .btn.primary:hover {
