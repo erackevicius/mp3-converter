@@ -46,30 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let data = await response.json();
             if (data.audioContent) {
-                return new Promise((resolve) => {
-                    let audio = new Audio(`data:audio/mp3;base64,${data.audioContent}`);
-                    currentAudio = audio;
-
-                    audio.play().then(() => {
-                        console.log("▶️ Pradėtas atkūrimas:", text);
-                    }).catch((error) => {
-                        console.error("❌ Garso atkūrimo klaida:", error);
-                        resolve(false);
-                    });
-
-                    audio.onended = async () => {
-                        console.log("✅ Baigtas klausymas:", text);
-                        resolve(true);
-                    };
-
-                    audio.onerror = () => {
-                        console.error("❌ Klaida grojant:", text);
-                        resolve(false);
-                    };
-
-                    // Užtikrina, kad laukia atkūrimo pabaigos
-                    audio.addEventListener("ended", () => resolve(true));
-                });
+                return await playAudio(`data:audio/mp3;base64,${data.audioContent}`, text);
             } else {
                 console.error("⚠️ API atsakė be garso:", data);
                 resetButtonStyles();
@@ -80,6 +57,31 @@ document.addEventListener("DOMContentLoaded", () => {
             resetButtonStyles();
             return false;
         }
+    }
+
+    async function playAudio(src, text) {
+        return new Promise((resolve) => {
+            let audio = new Audio(src);
+            currentAudio = audio;
+
+            audio.onended = () => {
+                console.log("✅ Baigtas klausymas:", text);
+                resolve(true);
+            };
+
+            audio.onerror = () => {
+                console.error("❌ Klaida grojant:", text);
+                resolve(false);
+            };
+
+            // **iOS/Android autoplay problemos sprendimas**
+            audio.play().then(() => {
+                console.log("▶️ Pradėtas atkūrimas:", text);
+            }).catch((error) => {
+                console.error("❌ Garso atkūrimo klaida:", error);
+                resolve(false);
+            });
+        });
     }
 
     function stopPlayback() {
