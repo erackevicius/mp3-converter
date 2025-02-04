@@ -74,7 +74,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 resolve(false);
             };
 
-            // **iOS/Android autoplay problemos sprendimas**
+            // 🔹 iOS/Android problemų sprendimas: aktyvuojame garsą tik po vartotojo veiksmo
+            document.body.addEventListener("touchstart", () => {
+                if (audio.paused) {
+                    audio.play();
+                }
+            }, { once: true });
+
             audio.play().then(() => {
                 console.log("▶️ Pradėtas atkūrimas:", text);
             }).catch((error) => {
@@ -132,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (stopRequested) break;
             let played = await playTTS(word, lang, button);
             if (!played) break;
-            await new Promise(resolve => setTimeout(resolve, 3000)); // ⚠️ Palikta 3 sek. pauzė tarp žodžių
+            await new Promise(resolve => setTimeout(resolve, 3000)); // 🔹 Paliekama 3 sek. pauzė
         }
 
         isSpeaking = false;
