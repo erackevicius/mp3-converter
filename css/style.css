@@ -687,3 +687,14 @@ a.btn:hover {
     margin-top: 20px; /* 📌 Pakoreguotas tarpas */
   }
 }
+/* 🎧 Aktyvus klausymo mygtukas (STOP režimas) */
+.content-btn.playing {
+  background: linear-gradient(to right, #ff4b2b, #ff416c); /* Raudona STOP spalva */
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.content-btn.playing::after {
+  content: " STOP"; /* Prideda STOP tekstą prie mygtuko */
+}

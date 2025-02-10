@@ -205,4 +205,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     loadStoredWords();
+    function setActiveButton(button) {
+        if (activeLink) activeLink.classList.remove("playing"); // Nuima aktyvumą nuo ankstesnio
+        button.classList.add("playing"); // Prideda STOP efektą
+        activeLink = button;
+    }
+    
+    function resetButtonStyles() {
+        if (activeLink) activeLink.classList.remove("playing"); // Sugrąžina pradinį stilių
+    }
+    
 });
