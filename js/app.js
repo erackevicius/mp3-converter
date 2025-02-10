@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const API_KEY = "AIzaSyAxf50b4-8EwvJZAHMl9ni2wFlxfzJkzWg";
     let isSpeaking = false;
     let stopRequested = false;
+    let repeatMode = false; // 🔹 Nauja kintamoji, skirta kartojimui
     let currentAudio = null;
     let activeLink = null;
 
@@ -70,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const source = audioContext.createBufferSource();
                     source.buffer = audioBuffer;
                     source.connect(audioContext.destination);
-                    
+
                     source.onended = () => {
                         console.log("✅ Baigtas klausymas:", text);
                         resolve(true);
@@ -87,6 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function stopPlayback() {
         stopRequested = true;
+        repeatMode = false; // 🔹 Išjungia ciklą
         if (currentAudio) {
             currentAudio.pause();
             currentAudio.currentTime = 0;
@@ -128,12 +130,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         isSpeaking = true;
         stopRequested = false;
+        repeatMode = true; // 🔹 Įjungia ciklą
 
-        for (const word of words) {
-            if (stopRequested) break;
-            let played = await playTTS(word, lang, button);
-            if (!played) break;
-            await new Promise(resolve => setTimeout(resolve, 3000)); // 🔹 Paliekama 3 sek. pauzė
+        while (repeatMode) {
+            for (const word of words) {
+                if (!repeatMode) break;
+                let played = await playTTS(word, lang, button);
+                if (!played) break;
+                await new Promise(resolve => setTimeout(resolve, 3000)); // 🔹 Paliekama 3 sek. pauzė
+            }
         }
 
         isSpeaking = false;
@@ -177,19 +182,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             isSpeaking = true;
             stopRequested = false;
-            setActiveButton(listenBoth);
+            repeatMode = true; // 🔹 Įjungia ciklą
 
-            for (let i = 0; i < Math.min(englishWords.length, lithuanianWords.length); i++) {
-                if (stopRequested) break;
-                console.log(`🔊 ${lithuanianWords[i]} → ${englishWords[i]}`);
+            while (repeatMode) {
+                for (let i = 0; i < Math.min(englishWords.length, lithuanianWords.length); i++) {
+                    if (!repeatMode) break;
+                    console.log(`🔊 ${lithuanianWords[i]} → ${englishWords[i]}`);
 
-                let played1 = await playTTS(lithuanianWords[i], "lt-LT", listenBoth);
-                if (!played1) break;
-                await new Promise(resolve => setTimeout(resolve, 3000));
+                    let played1 = await playTTS(lithuanianWords[i], "lt-LT", listenBoth);
+                    if (!played1) break;
+                    await new Promise(resolve => setTimeout(resolve, 3000));
 
-                let played2 = await playTTS(englishWords[i], "en-US", listenBoth);
-                if (!played2) break;
-                await new Promise(resolve => setTimeout(resolve, 3000));
+                    let played2 = await playTTS(englishWords[i], "en-US", listenBoth);
+                    if (!played2) break;
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                }
             }
 
             isSpeaking = false;
