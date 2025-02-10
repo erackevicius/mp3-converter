@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let isSpeaking = false;
     let stopRequested = false;
     let repeatMode = false; // 🔹 Nauja kintamoji, skirta kartojimui
-    let currentAudio = null;
+    let currentSource = null;
+    let audioContext = null;
     let activeLink = null;
 
     function loadStoredWords() {
@@ -61,50 +62,60 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     async function playAudioWebAPI(src, text) {
-        return new Promise((resolve) => {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        return new Promise(async (resolve) => {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
 
-            fetch(src)
-                .then(response => response.arrayBuffer())
-                .then(arrayBuffer => audioContext.decodeAudioData(arrayBuffer))
-                .then(audioBuffer => {
-                    const source = audioContext.createBufferSource();
-                    source.buffer = audioBuffer;
-                    source.connect(audioContext.destination);
+            try {
+                const response = await fetch(src);
+                const arrayBuffer = await response.arrayBuffer();
+                const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
+                
+                currentSource = audioContext.createBufferSource();
+                currentSource.buffer = audioBuffer;
+                currentSource.connect(audioContext.destination);
 
-                    source.onended = () => {
-                        console.log("✅ Baigtas klausymas:", text);
-                        resolve(true);
-                    };
+                currentSource.onended = () => {
+                    console.log("✅ Baigtas klausymas:", text);
+                    resolve(true);
+                };
 
-                    source.start(0);
-                })
-                .catch(error => {
-                    console.error("❌ Klaida grojant:", error);
-                    resolve(false);
-                });
+                currentSource.start(0);
+            } catch (error) {
+                console.error("❌ Klaida grojant:", error);
+                resolve(false);
+            }
         });
     }
 
     function stopPlayback() {
         stopRequested = true;
         repeatMode = false; // 🔹 Išjungia ciklą
-        if (currentAudio) {
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
+        if (currentSource) {
+            currentSource.stop();
+            currentSource = null;
+        }
+        if (audioContext) {
+            audioContext.close();
+            audioContext = null;
         }
         isSpeaking = false;
         resetButtonStyles();
     }
 
     function setActiveButton(button) {
-        if (activeLink) activeLink.classList.remove("active");
-        button.classList.add("active");
+        if (activeLink) activeLink.textContent = activeLink.dataset.originalText;
+        button.dataset.originalText = button.textContent;
+        button.textContent = "STOP"; // Keičia mygtuko pavadinimą į STOP
         activeLink = button;
     }
 
     function resetButtonStyles() {
-        if (activeLink) activeLink.classList.remove("active");
+        if (activeLink) {
+            activeLink.textContent = activeLink.dataset.originalText;
+            activeLink = null;
+        }
     }
 
     document.getElementById("clear-btn").addEventListener("click", () => {
@@ -205,14 +216,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     loadStoredWords();
-    function setActiveButton(button) {
-        if (activeLink) activeLink.classList.remove("playing"); // Nuima aktyvumą nuo ankstesnio
-        button.classList.add("playing"); // Prideda STOP efektą
-        activeLink = button;
-    }
-    
-    function resetButtonStyles() {
-        if (activeLink) activeLink.classList.remove("playing"); // Sugrąžina pradinį stilių
-    }
-    
 });
