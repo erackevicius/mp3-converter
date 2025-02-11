@@ -32,10 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
         stopRequested = false;
         setActiveButton(button);
 
+        let voiceName = lang === "en-GB" ? "en-GB-Standard-A" : null; // 🔹 Britiškas moteriškas balsas
+
         let url = `https://texttospeech.googleapis.com/v1/text:synthesize?key=${API_KEY}`;
         let requestBody = {
             input: { text: text },
-            voice: { languageCode: lang, ssmlGender: "NEUTRAL" },
+            voice: { languageCode: lang, ssmlGender: "FEMALE", name: voiceName },
             audioConfig: { audioEncoding: "MP3", speakingRate: 1.0, pitch: 0.0 }
         };
 
@@ -91,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function stopPlayback() {
         stopRequested = true;
-        repeatMode = false; // 🔹 Išjungia ciklą
+        repeatMode = false;
         if (currentSource) {
             currentSource.stop();
             currentSource = null;
@@ -107,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function setActiveButton(button) {
         if (activeLink) activeLink.textContent = activeLink.dataset.originalText;
         button.dataset.originalText = button.textContent;
-        button.textContent = "STOP"; // Keičia mygtuko pavadinimą į STOP
+        button.textContent = "STOP";
         activeLink = button;
     }
 
@@ -141,14 +143,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         isSpeaking = true;
         stopRequested = false;
-        repeatMode = true; // 🔹 Įjungia ciklą
+        repeatMode = true;
 
         while (repeatMode) {
             for (const word of words) {
                 if (!repeatMode) break;
                 let played = await playTTS(word, lang, button);
                 if (!played) break;
-                await new Promise(resolve => setTimeout(resolve, 3000)); // 🔹 Paliekama 3 sek. pauzė
+                await new Promise(resolve => setTimeout(resolve, 3000));
             }
         }
 
@@ -166,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const listenEnglish = document.getElementById("listen-english");
     if (listenEnglish) {
         listenEnglish.addEventListener("click", (event) => 
-            handleClick(event, document.getElementById("english-input"), "en-US", listenEnglish)
+            handleClick(event, document.getElementById("english-input"), "en-GB", listenEnglish) // 🔹 Britiškas balsas
         );
     }
 
@@ -193,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             isSpeaking = true;
             stopRequested = false;
-            repeatMode = true; // 🔹 Įjungia ciklą
+            repeatMode = true;
 
             while (repeatMode) {
                 for (let i = 0; i < Math.min(englishWords.length, lithuanianWords.length); i++) {
@@ -204,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     if (!played1) break;
                     await new Promise(resolve => setTimeout(resolve, 3000));
 
-                    let played2 = await playTTS(englishWords[i], "en-US", listenBoth);
+                    let played2 = await playTTS(englishWords[i], "en-GB", listenBoth); // 🔹 Britiškas balsas
                     if (!played2) break;
                     await new Promise(resolve => setTimeout(resolve, 3000));
                 }
