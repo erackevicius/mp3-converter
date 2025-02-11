@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function setActiveButton(button) {
         if (activeLink) activeLink.textContent = activeLink.dataset.originalText;
         button.dataset.originalText = button.textContent;
-        button.textContent = "STOP";
+        button.textContent = "SUSTABDYTI KLAUSYMĄ 🎧";
         activeLink = button;
     }
 
