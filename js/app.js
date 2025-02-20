@@ -172,50 +172,101 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    const listenBoth = document.getElementById("listen-both");
-    if (listenBoth) {
-        listenBoth.addEventListener("click", async (event) => {
-            event.preventDefault();
+    const listenBothlt = document.getElementById("listen-both-lt");
+if (listenBothlt) {
+    listenBothlt.addEventListener("click", async (event) => {
+        event.preventDefault();
 
-            if (isSpeaking) {
-                stopPlayback();
-                return;
+        if (isSpeaking) {
+            stopPlayback();
+            return;
+        }
+
+        const englishInput = document.getElementById("english-input");
+        const lithuanianInput = document.getElementById("lithuanian-input");
+
+        const englishWords = englishInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
+        const lithuanianWords = lithuanianInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
+
+        if (!englishWords.length || !lithuanianWords.length) {
+            alert("⚠️ Abu laukai turi turėti tekstą!");
+            return;
+        }
+
+        isSpeaking = true;
+        stopRequested = false;
+        repeatMode = true;
+        setActiveButton(listenBothlt); // 🔹 Aktyvina mygtuką
+
+        while (repeatMode) {
+            for (let i = 0; i < Math.min(englishWords.length, lithuanianWords.length); i++) {
+                if (!repeatMode) break;
+
+                console.log(`🔊 ${lithuanianWords[i]} → ${englishWords[i]}`);
+
+                // 1️⃣ Pirmas skaitomas lietuviškas žodis
+                let played1 = await playTTS(lithuanianWords[i], "lt-LT", listenBothlt);
+                if (!played1) break;
+                await new Promise(resolve => setTimeout(resolve, 3000)); // ⏳ 3 sek. pauzė
+
+                // 2️⃣ Antras skaitomas angliškas žodis
+                let played2 = await playTTS(englishWords[i], "en-GB", listenBothlt); // 🔹 Britiškas balsas
+                if (!played2) break;
+                await new Promise(resolve => setTimeout(resolve, 3000)); // ⏳ 3 sek. pauzė
             }
+        }
 
-            const englishInput = document.getElementById("english-input");
-            const lithuanianInput = document.getElementById("lithuanian-input");
+        isSpeaking = false;
+        resetButtonStyles();
+    });
 
-            const englishWords = englishInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
-            const lithuanianWords = lithuanianInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
-
-            if (!englishWords.length || !lithuanianWords.length) {
-                alert("⚠️ Abu laukai turi turėti tekstą!");
-                return;
-            }
-
-            isSpeaking = true;
-            stopRequested = false;
-            repeatMode = true;
-
-            while (repeatMode) {
-                for (let i = 0; i < Math.min(englishWords.length, lithuanianWords.length); i++) {
-                    if (!repeatMode) break;
-                    console.log(`🔊 ${lithuanianWords[i]} → ${englishWords[i]}`);
-
-                    let played1 = await playTTS(lithuanianWords[i], "lt-LT", listenBoth);
-                    if (!played1) break;
-                    await new Promise(resolve => setTimeout(resolve, 3000));
-
-                    let played2 = await playTTS(englishWords[i], "en-GB", listenBoth); // 🔹 Britiškas balsas
-                    if (!played2) break;
-                    await new Promise(resolve => setTimeout(resolve, 3000));
-                }
-            }
-
-            isSpeaking = false;
-            resetButtonStyles();
-        });
     }
+    const listenBothEn = document.getElementById("listen-both-en");
+if (listenBothEn) {
+    listenBothEn.addEventListener("click", async (event) => {
+        event.preventDefault();
 
+        if (isSpeaking) {
+            stopPlayback();
+            return;
+        }
+
+        const englishInput = document.getElementById("english-input");
+        const lithuanianInput = document.getElementById("lithuanian-input");
+
+        const englishWords = englishInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
+        const lithuanianWords = lithuanianInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
+
+        if (!englishWords.length || !lithuanianWords.length) {
+            alert("⚠️ Abu laukai turi turėti tekstą!");
+            return;
+        }
+
+        isSpeaking = true;
+        stopRequested = false;
+        repeatMode = true;
+        setActiveButton(listenBothEn); // 🔹 Aktyvina mygtuką
+
+        while (repeatMode) {
+            for (let i = 0; i < Math.min(englishWords.length, lithuanianWords.length); i++) {
+                if (!repeatMode) break;
+                console.log(`🔊 ${englishWords[i]} → ${lithuanianWords[i]}`);
+
+                // 1️⃣ Pirmas skaitomas angliškas žodis
+                let played1 = await playTTS(englishWords[i], "en-GB", listenBothEn);
+                if (!played1) break;
+                await new Promise(resolve => setTimeout(resolve, 3000)); // ⏳ 3 sek. pauzė
+
+                // 2️⃣ Antras skaitomas lietuviškas žodis
+                let played2 = await playTTS(lithuanianWords[i], "lt-LT", listenBothEn);
+                if (!played2) break;
+                await new Promise(resolve => setTimeout(resolve, 3000)); // ⏳ 3 sek. pauzė
+            }
+        }
+
+        isSpeaking = false;
+        resetButtonStyles();
+    });
+}
     loadStoredWords();
 });
