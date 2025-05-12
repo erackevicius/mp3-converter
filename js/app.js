@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentSource = null;
     let audioContext = null;
     let activeLink = null;
+    let currentSession = 0;
+    const currentWordDisplay = document.getElementById("current-word");
 
     function isIOSSafari() {
         const ua = navigator.userAgent;
@@ -45,6 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function playTTS(text, lang, button) {
         if (!text || stopRequested) return false;
+
+        if (currentWordDisplay) currentWordDisplay.textContent = `🔊 ${text}`;
 
         isSpeaking = true;
         stopRequested = false;
@@ -122,28 +126,31 @@ document.addEventListener("DOMContentLoaded", () => {
     async function stopPlayback() {
         stopRequested = true;
         repeatMode = false;
+        currentSession++;
 
-        if (currentSource) {
-            try {
+        try {
+            if (currentSource) {
                 currentSource.stop();
                 currentSource.disconnect();
-            } catch (e) {
-                console.warn("⚠️ Nepavyko sustabdyti garso:", e);
+                currentSource = null;
             }
-            currentSource = null;
+        } catch (e) {
+            console.warn("⚠️ Nepavyko sustabdyti grojimo šaltinio:", e);
         }
 
-        if (audioContext && audioContext.state !== "closed") {
-            try {
+        try {
+            if (audioContext && audioContext.state !== "closed") {
                 await audioContext.close();
-            } catch (e) {
-                console.warn("⚠️ Nepavyko uždaryti audioContext:", e);
             }
+        } catch (e) {
+            console.warn("⚠️ Nepavyko uždaryti audioContext:", e);
+        } finally {
             audioContext = null;
         }
 
         isSpeaking = false;
         resetButtonStyles();
+        if (currentWordDisplay) currentWordDisplay.textContent = "";
     }
 
     function setActiveButton(button) {
@@ -181,28 +188,23 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        const session = ++currentSession;
         isSpeaking = true;
         stopRequested = false;
         repeatMode = true;
 
-        while (repeatMode) {
+        while (repeatMode && session === currentSession) {
             for (const word of words) {
-                if (!repeatMode) break;
+                if (!repeatMode || session !== currentSession) break;
                 let played = await playTTS(word, lang, button);
-                if (!played || stopRequested) break;
+                if (!played || stopRequested || session !== currentSession) break;
                 await new Promise(resolve => setTimeout(resolve, 3000));
             }
         }
 
         isSpeaking = false;
         resetButtonStyles();
-    }
-
-    const listenLithuanian = document.getElementById("listen-lithuanian");
-    if (listenLithuanian) {
-        listenLithuanian.addEventListener("click", (event) => 
-            handleClick(event, document.getElementById("lithuanian-input"), "lt-LT", listenLithuanian)
-        );
+        if (currentWordDisplay) currentWordDisplay.textContent = "";
     }
 
     const listenEnglish = document.getElementById("listen-english");
@@ -212,50 +214,11 @@ document.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    const listenBothlt = document.getElementById("listen-both-lt");
-    if (listenBothlt) {
-        listenBothlt.addEventListener("click", async (event) => {
-            event.preventDefault();
-
-            if (isSpeaking) {
-                await stopPlayback();
-                return;
-            }
-
-            const englishInput = document.getElementById("english-input");
-            const lithuanianInput = document.getElementById("lithuanian-input");
-
-            const englishWords = englishInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
-            const lithuanianWords = lithuanianInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
-
-            if (!englishWords.length || !lithuanianWords.length) {
-                alert("⚠️ Abu laukai turi turėti tekstą!");
-                return;
-            }
-
-            isSpeaking = true;
-            stopRequested = false;
-            repeatMode = true;
-            setActiveButton(listenBothlt);
-
-            while (repeatMode) {
-                for (let i = 0; i < Math.min(englishWords.length, lithuanianWords.length); i++) {
-                    if (!repeatMode) break;
-                    console.log(`🔊 ${lithuanianWords[i]} → ${englishWords[i]}`);
-
-                    let played1 = await playTTS(lithuanianWords[i], "lt-LT", listenBothlt);
-                    if (!played1 || stopRequested) break;
-                    await new Promise(resolve => setTimeout(resolve, 3000));
-
-                    let played2 = await playTTS(englishWords[i], "en-GB", listenBothlt);
-                    if (!played2 || stopRequested) break;
-                    await new Promise(resolve => setTimeout(resolve, 3000));
-                }
-            }
-
-            isSpeaking = false;
-            resetButtonStyles();
-        });
+    const listenLithuanian = document.getElementById("listen-lithuanian");
+    if (listenLithuanian) {
+        listenLithuanian.addEventListener("click", (event) => 
+            handleClick(event, document.getElementById("lithuanian-input"), "lt-LT", listenLithuanian)
+        );
     }
 
     const listenBothEn = document.getElementById("listen-both-en");
@@ -279,28 +242,76 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            const session = ++currentSession;
             isSpeaking = true;
             stopRequested = false;
             repeatMode = true;
             setActiveButton(listenBothEn);
 
-            while (repeatMode) {
+            while (repeatMode && session === currentSession) {
                 for (let i = 0; i < Math.min(englishWords.length, lithuanianWords.length); i++) {
-                    if (!repeatMode) break;
-                    console.log(`🔊 ${englishWords[i]} → ${lithuanianWords[i]}`);
+                    if (!repeatMode || session !== currentSession) break;
 
-                    let played1 = await playTTS(englishWords[i], "en-GB", listenBothEn);
-                    if (!played1 || stopRequested) break;
+                    let played1 = await playTTS(lithuanianWords[i], "lt-LT", listenBothEn);
+                    if (!played1 || stopRequested || session !== currentSession) break;
                     await new Promise(resolve => setTimeout(resolve, 3000));
 
-                    let played2 = await playTTS(lithuanianWords[i], "lt-LT", listenBothEn);
-                    if (!played2 || stopRequested) break;
+                    let played2 = await playTTS(englishWords[i], "en-GB", listenBothEn);
+                    if (!played2 || stopRequested || session !== currentSession) break;
                     await new Promise(resolve => setTimeout(resolve, 3000));
                 }
             }
 
             isSpeaking = false;
             resetButtonStyles();
+            if (currentWordDisplay) currentWordDisplay.textContent = "";
+        });
+    }
+
+    const listenBothLt = document.getElementById("listen-both-lt");
+    if (listenBothLt) {
+        listenBothLt.addEventListener("click", async (event) => {
+            event.preventDefault();
+
+            if (isSpeaking) {
+                await stopPlayback();
+                return;
+            }
+
+            const englishInput = document.getElementById("english-input");
+            const lithuanianInput = document.getElementById("lithuanian-input");
+
+            const englishWords = englishInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
+            const lithuanianWords = lithuanianInput?.value.trim().split("\n").map(word => word.trim()).filter(word => word);
+
+            if (!englishWords.length || !lithuanianWords.length) {
+                alert("⚠️ Abu laukai turi turėti tekstą!");
+                return;
+            }
+
+            const session = ++currentSession;
+            isSpeaking = true;
+            stopRequested = false;
+            repeatMode = true;
+            setActiveButton(listenBothLt);
+
+            while (repeatMode && session === currentSession) {
+                for (let i = 0; i < Math.min(englishWords.length, lithuanianWords.length); i++) {
+                    if (!repeatMode || session !== currentSession) break;
+
+                    let played1 = await playTTS(englishWords[i], "en-GB", listenBothLt);
+                    if (!played1 || stopRequested || session !== currentSession) break;
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+
+                    let played2 = await playTTS(lithuanianWords[i], "lt-LT", listenBothLt);
+                    if (!played2 || stopRequested || session !== currentSession) break;
+                    await new Promise(resolve => setTimeout(resolve, 3000));
+                }
+            }
+
+            isSpeaking = false;
+            resetButtonStyles();
+            if (currentWordDisplay) currentWordDisplay.textContent = "";
         });
     }
 
