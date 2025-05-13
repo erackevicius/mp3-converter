@@ -29,6 +29,38 @@ document.addEventListener("DOMContentLoaded", () => {
         }, { once: true });
     }
 
+    function unlockAudioOnUserGesture() {
+        if (!audioContext || audioContext.state !== "running") {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const buffer = audioContext.createBuffer(1, 1, 22050);
+            const source = audioContext.createBufferSource();
+            source.buffer = buffer;
+            source.connect(audioContext.destination);
+            if (source.start) source.start(0);
+            audioContext.resume().then(() => {
+                console.log("🔓 Audio unlocked");
+            });
+        }
+    }
+    document.body.addEventListener("touchend", unlockAudioOnUserGesture, { once: true });
+    document.body.addEventListener("click", unlockAudioOnUserGesture, { once: true });
+
+    function loadStoredWords() {
+        const selectedWords = localStorage.getItem("selectedWords");
+        if (selectedWords) {
+            const wordsArray = JSON.parse(selectedWords);
+            const englishInput = document.getElementById("english-input");
+            const lithuanianInput = document.getElementById("lithuanian-input");
+
+            if (!englishInput.value.trim()) {
+                englishInput.value = wordsArray.map(word => word.english).join("\n");
+            }
+            if (!lithuanianInput.value.trim()) {
+                lithuanianInput.value = wordsArray.map(word => word.lithuanian).join("\n");
+            }
+        }
+    }
+
     function loadStoredWords() {
         const selectedWords = localStorage.getItem("selectedWords");
         if (selectedWords) {
