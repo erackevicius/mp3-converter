@@ -13,6 +13,14 @@ body {
   padding-top: 20px; /* 📌 Papildomas tarpas viršuje, jei nėra viršutinės juostos */
 }
 
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+
 /* 📌 Konteineris */
 .container {
   display: flex;
@@ -456,6 +464,14 @@ a.btn:hover {
   gap: 10px; /* Vienodas tarpas tarp elementų */
   align-items: center;
   justify-content: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  margin-top: 40px;
+  width: 100%;
+  flex-direction: column;
 }
 
 /* Antraštė */
@@ -685,5 +701,25 @@ a.btn:hover {
 
   .container {
     margin-top: 20px; /* 📌 Pakoreguotas tarpas */
+  }
+}
+.footer {
+  text-align: center;
+  font-size: 13px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 15px 20px;
+  width: 100%;
+  line-height: 1.5;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  box-sizing: border-box;
+}
+
+/* Reagavimas į mažesnius ekranus */
+@media (max-width: 600px) {
+  .footer {
+    font-size: 12px;
+    padding: 12px 15px;
+    line-height: 1.4;
   }
 }
