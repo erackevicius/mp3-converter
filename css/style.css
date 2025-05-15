@@ -468,7 +468,7 @@ a.btn:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 0px;
   margin-top: 40px;
   width: 100%;
   flex-direction: column;
@@ -700,7 +700,7 @@ a.btn:hover {
   }
 
   .container {
-    margin-top: 300px; /* 📌 Pakoreguotas tarpas */
+    margin-top: 100px; /* 📌 Pakoreguotas tarpas */
   }
 }
 .footer {
