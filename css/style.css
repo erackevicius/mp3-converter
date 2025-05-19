@@ -33,7 +33,7 @@ html, body {
   justify-content: center;
   padding: 20px;
   width: 100%;
-  margin-top: 40px; /* 📌 Užtikrina, kad turinys neprispaustų prie viršaus */
+  margin-top: 20px; 
 }
 
 .card {
@@ -473,8 +473,7 @@ a.btn:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0px;
-  /* margin-top: 40px; */
+  padding: 0px; 
   width: 100%;
   flex-direction: column;
 }
@@ -498,8 +497,11 @@ a.btn:hover {
 /* Paaiškinimas */
 .container .subtitle {
   font-size: 1.2em;
-  color: #fff;
-  /* margin-top: 100px; */
+  color: #fff;  
+}
+.container .subtitle-main {
+  font-size: 1.2em;
+  color: #fff;  
 }
 
 /* Žodynas */
@@ -712,14 +714,17 @@ a.btn:hover {
   body {
     padding-top: 0px; /* 📌 Padidina tarpą, kad turinys nebūtų nukirptas */
   }
-  .container .subtitle {
-    margin-top: 220px;
+  .container .subtitle-main {
+    margin-top: 180px;
   }
-
+  .site-header {
+    padding-top: 160px;
+  }
   .container {
-    margin-top: 20px; /* 📌 Pakoreguotas tarpas */
+    /* margin-top: 20px; 📌 Pakoreguotas tarpas */
   }
-}
+  }
+  
 .footer {
   text-align: center;
   font-size: 13px;
