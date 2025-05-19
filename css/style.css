@@ -480,14 +480,11 @@ a.btn:hover {
 }
 
 .container-index {
-  max-width: 500px; 
-  text-align: center;  
-  gap: 10px; /* Vienodas tarpas tarp elementų */  
+  max-width: 500px;   
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
+  justify-content: center;  
   flex-direction: column;
 }
 
