@@ -20,6 +20,9 @@ html, body {
   flex-direction: column;
 }
 
+.site-header {
+  margin-top: 30px; /* arba 40px, pagal poreikį */
+}
 
 /* 📌 Konteineris */
 .container {
