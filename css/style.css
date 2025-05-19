@@ -461,11 +461,11 @@ a.btn:hover {
 .container {
   max-width: 500px;
   /* margin: 0 auto; */
-  padding: 20px;
-  margin-top: 20px; /* Prideda papildomą tarpą viršuje */
+  /* padding: 20px; */
+  /* margin-top: 20px; Prideda papildomą tarpą viršuje */
   text-align: center;
-  display: flex;
-  flex-direction: column;
+  /* display: flex;
+  flex-direction: column; */
   gap: 10px; /* Vienodas tarpas tarp elementų */
   align-items: center;
   justify-content: center;
@@ -474,7 +474,19 @@ a.btn:hover {
   align-items: center;
   justify-content: center;
   padding: 0px;
-  margin-top: 40px;
+  /* margin-top: 40px; */
+  width: 100%;
+  flex-direction: column;
+}
+
+.container-index {
+  max-width: 500px; 
+  text-align: center;  
+  gap: 10px; /* Vienodas tarpas tarp elementų */  
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   flex-direction: column;
 }
@@ -490,7 +502,7 @@ a.btn:hover {
 .container .subtitle {
   font-size: 1.2em;
   color: #fff;
-  margin-top: 100px;
+  /* margin-top: 100px; */
 }
 
 /* Žodynas */
