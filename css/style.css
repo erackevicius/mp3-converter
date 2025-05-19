@@ -1,5 +1,5 @@
 body {
-  margin: 0;
+  /* margin: 0; */
   font-family: "Lexend", serif;
   font-optical-sizing: auto;
   font-weight: weight;
@@ -711,6 +711,9 @@ a.btn:hover {
 @media (max-width: 600px) {
   body {
     padding-top: 0px; /* 📌 Padidina tarpą, kad turinys nebūtų nukirptas */
+  }
+  .container .subtitle {
+    margin-top: 220px;
   }
 
   .container {
