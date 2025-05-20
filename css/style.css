@@ -460,7 +460,7 @@ a.btn:hover {
 /* Konteinerio stilius */
 .container {
   max-width: 500px;
-  /* margin: 0 auto; */
+  margin: 0 auto;
   /* padding: 20px; */
   /* margin-top: 20px; Prideda papildomą tarpą viršuje */
   text-align: center;
@@ -721,10 +721,10 @@ a.btn:hover {
     padding-top: 160px;
   }
   .container {
-    /* margin-top: 20px; 📌 Pakoreguotas tarpas */
+    margin-top: 0px;
   }
   }
-  
+
 .footer {
   text-align: center;
   font-size: 13px;
