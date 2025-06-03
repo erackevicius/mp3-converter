@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (lastHash !== newHash) {
                 console.log("🔄 JSON atnaujintas – nauji duomenys įkeliami...");
                 words = JSON.parse(jsonText);
-                words = shuffleArray(words);
+                // words = shuffleArray(words);
 
                 // Išsaugo naujus duomenis į `localStorage`
                 localStorage.setItem("shuffled133wordWords", JSON.stringify(words));

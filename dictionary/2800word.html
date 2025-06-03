@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2800</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+   <header class="site-header">
+    <h1>📖 2800 žodžių</h1>
+  </header>
+  <div class="container">
+    <p class="subtitle">Pasirinkite žodžius, kuriuos norite mokintis</p>
+    
+    <!-- Žodynas -->
+    <ul id="dictionary-list"></ul>
+    
+    <!-- Mygtukas generuoti MP3 -->
+    <button class="btn primary large-btn" id="generate-btn">🎙️ Įkelti į klausymą</button>
+        <!-- Nuoroda į turinį -->
+    <a href="turinys.html" class="btn secondary large-btn">↩️ Grįžti į turinį</a>
+    <!-- Nuoroda į pagrindinį puslapį -->
+    <a href="../main.html" class="btn secondary large-btn">↩️ Grįžti į pagrindinį puslapį</a>
+  </div>
+
+  <div id="overlay"></div>
+  <div id="loading-spinner">
+    <div class="spinner"></div>
+    <p>Kraunama...</p>
+  </div>
+
+  <div id="message-box">
+    <p>Gero klausymo!</p>
+    <button id="message-close-btn" class="btn primary">Ačiū!</button>
+  </div>
+  <footer class="footer">
+    <p>
+      © 2025 edVardas. Visos teisės saugomos.<br>      
+    </p>
+    <p>
+      info@audiozodynai.lt<br>      
+    </p>
+  </footer>
+
+  <script src="./2800word.js"></script>
+</body>
+</html>
