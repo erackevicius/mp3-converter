@@ -104,7 +104,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let data = await response.json();
             if (data.audioContent) {
-                return await playAudioWebAPI(`data:audio/mp3;base64,${data.audioContent}`, text);
+                const audioData = Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0));
+                const blob = new Blob([audioData], { type: 'audio/mp3' });
+                const url = URL.createObjectURL(blob);
+                return await playAudioWebAPI(url, text);
             } else {
                 console.error("⚠️ API atsakė be garso:", data);
                 resetButtonStyles();
