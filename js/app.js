@@ -104,11 +104,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
             let data = await response.json();
             if (data.audioContent) {
-                const audioData = Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0));
-                const blob = new Blob([audioData], { type: 'audio/mp3' });
-                const url = URL.createObjectURL(blob);
-                return await playAudioWebAPI(url, text);
-            } else {
+            const audioData = Uint8Array.from(atob(data.audioContent), c => c.charCodeAt(0));
+            const blob = new Blob([audioData], { type: 'audio/mp3' });
+            const url = URL.createObjectURL(blob);
+
+    if (!audioContext || audioContext.state === "closed") {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    if (audioContext.state === "suspended") {
+        try {
+            await audioContext.resume();
+            console.log("🔊 AudioContext atnaujintas prieš grojant");
+        } catch (e) {
+            console.warn("⚠️ Nepavyko atnaujinti AudioContext:", e);
+        }
+    }
+
+    return await playAudioWebAPI(url, text);
+} else {
                 console.error("⚠️ API atsakė be garso:", data);
                 resetButtonStyles();
                 return false;
