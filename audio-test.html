@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+  <meta charset="UTF-8">
+  <title>iPhone Garso Testas</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+    button {
+      padding: 15px 25px;
+      font-size: 18px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎧 iPhone Garso Testas</h1>
+  <p>Paspausk mygtuką, kad patikrintum ar tavo iPhone leidžia garsą naršyklėje.</p>
+  <button onclick="playTestSound()">Groti testinį garsą</button>
+
+  <script>
+    let audioContext;
+
+    function playTestSound() {
+      if (!audioContext || audioContext.state === "closed") {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      }
+
+      if (audioContext.state === "suspended") {
+        audioContext.resume().then(() => {
+          console.log("AudioContext aktyvuotas");
+        });
+      }
+
+      const audio = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3");
+      audio.play()
+        .then(() => console.log("🎶 Garso paleidimas sėkmingas!"))
+        .catch(err => console.error("❌ Klaida grojant:", err));
+    }
+  </script>
+</body>
+</html>
